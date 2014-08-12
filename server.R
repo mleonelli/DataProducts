@@ -33,9 +33,11 @@ shinyServer(function(input, output) {
     
     xcol <- input$xcol
     ycol <- input$ycol
-    selectedData <- data[data$Age >= input$age[1] & data$Age <= input$age[2], c(xcol, ycol, "District", "Sex")]
-    selectedData <- selectedData[selectedData$Sex == input$sex, ]
-    selectedData <- selectedData[selectedData$District == input$district, ]
+    selectedData <- data[data$District %in% input$district, ]
+    selectedData <- selectedData[selectedData$Sex %in% input$sex, ]
+    selectedData <- selectedData[selectedData$Age >= input$age[1] & selectedData$Age <= input$age[2], c(xcol, ycol, "District", "Sex")]
+    
+    
     g <- ggplot(aes_string(x = xcol, y = ycol), data = selectedData)
     if(input$facet == "Sex"){
       g + facet_grid(. ~ Sex) + geom_line(aes(color = District)) + geom_point(aes(color = District))
@@ -47,11 +49,11 @@ shinyServer(function(input, output) {
   })
   
   output$distTable <- renderDataTable({
-    selectedData <- data[data$Age >= input$age[1] & data$Age <= input$age[2], ]
-    selectedData <- selectedData[selectedData$Sex == input$sex, ]
-    selectedData <- selectedData[selectedData$District == input$district, ]
+    selectedData <- data[data$District %in% input$district, ]
+    selectedData <- selectedData[selectedData$Sex %in% input$sex, ]
+    selectedData <- selectedData[selectedData$Age >= input$age[1] & selectedData$Age <= input$age[2], ]
+    
     selectedData
   })
   
-
 })

@@ -1,4 +1,4 @@
-District,Sex,Age,Living,Dead,DeathProbability,LifeProbability,LifeExpentancy
+District,Sex,Age,Survivors,Deaths,DeathProbability,ProbabilityOfSurviving,ExpectactionOfLife
 Agrigento,Male,0,100000,632,6.32385,0.9995092,78.797
 Agrigento,Male,1,99368,23,0.23093,0.99978,78.296
 Agrigento,Male,2,99345,21,0.20913,0.9998018,77.314
