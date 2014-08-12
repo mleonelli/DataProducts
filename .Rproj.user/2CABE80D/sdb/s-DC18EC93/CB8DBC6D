@@ -1,0 +1,16 @@
+{
+    "contents" : "\n# This is the user-interface definition of a Shiny web application.\n# You can find out more about building applications with Shiny here:\n#\n# http://shiny.rstudio.com\n#\n\nlibrary(shiny)\n\nshinyUI(\n  \n  \n  fluidPage(\n\n  # Application title\n  titlePanel(\"Life Expentancy in Italy by District 2012\"),\n  \n  \n  \n  \n  # Sidebar with a slider input for number of bins\n  sidebarLayout(\n    sidebarPanel(\n      \n      uiOutput(\"AgeControl\"),\n      uiOutput(\"DistrictControl\"),\n      uiOutput(\"SexControl\"),\n      selectInput('xcol', 'X Variable', c(\"Age\", \"DeathProbability\", \"LifeProbability\", \"LifeExpentancy\")),\n      selectInput('ycol', 'Y Variable', c(\"Living\", \"Dead\", \"DeathProbability\", \"LifeProbability\", \"LifeExpentancy\")),\n      selectInput('facet', 'Facet By', c(\"Sex\", \"District\"))\n    ),\n\n    # Show a plot of the generated distribution\n    mainPanel(\n      tabsetPanel(\n        id = 'dataset',\n        tabPanel('Graph', plotOutput(\"distPlot\")),\n        tabPanel('Table', dataTableOutput('distTable'))\n    )\n    \n    \n  )\n)))\n",
+    "created" : 1407839988058.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "3020962522",
+    "id" : "CB8DBC6D",
+    "lastKnownWriteTime" : 1407840199,
+    "path" : "C:/R/DataProducts/ui.R",
+    "project_path" : "ui.R",
+    "properties" : {
+    },
+    "source_on_save" : false,
+    "type" : "r_source"
+}

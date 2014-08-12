@@ -1,0 +1,16 @@
+{
+    "contents" : "\n# This is the server logic for a Shiny web application.\n# You can find out more about building applications with Shiny here:\n#\n# http://shiny.rstudio.com\n#\n\nlibrary(shiny)\nlibrary(ggplot2)\n\nshinyServer(function(input, output) {\n  data <- read.csv(\"datiprovincialicompleti2012.csv\")\n  data$District <- as.character(data$District)\n  \n  output$AgeControl <- renderUI({\n    sliderInput(inputId = \"age\", label = \"Choose an age range:\", min = min(data$Age), max =  max(data$Age), step = 1, value = c(min(data$Age), max(data$Age)))\n  })\n  \n  output$DistrictControl <- renderUI({\n    selectizeInput(inputId = \"district\", \n                   label = \"Choose up to 10 districts:\", \n                   choices = unique(data$District), \n                   multiple = TRUE, \n                   selected = c(\"Milano\", \"Roma\"),\n                   options = list(maxItems = 10)\n                 )\n  })\n  output$SexControl <- renderUI({\n    selectizeInput(inputId = \"sex\", label = \"Choose a sex:\",choices=c(\"Male\", \"Female\"), multiple= TRUE, selected = c(\"Female\"))\n  })\n  \n  output$distPlot <- renderPlot({\n    \n    xcol <- input$xcol\n    ycol <- input$ycol\n    selectedData <- data[data$Age >= input$age[1] & data$Age <= input$age[2], c(xcol, ycol, \"District\", \"Sex\")]\n    selectedData <- selectedData[selectedData$Sex == input$sex, ]\n    selectedData <- selectedData[selectedData$District == input$district, ]\n    g <- ggplot(aes_string(x = xcol, y = ycol), data = selectedData)\n    if(input$facet == \"Sex\"){\n      g + facet_grid(. ~ Sex) + geom_line(aes(color = District)) + geom_point(aes(color = District))\n    }\n    else{\n      g + facet_grid(. ~ District) + geom_line(aes(color = Sex)) + geom_point(aes(color = Sex))\n    }\n\n  })\n  \n  output$distTable <- renderDataTable({\n    selectedData <- data[data$Age >= input$age[1] & data$Age <= input$age[2], ]\n    selectedData <- selectedData[selectedData$Sex == input$sex, ]\n    selectedData <- selectedData[selectedData$District == input$district, ]\n    selectedData\n  })\n  \n\n})\n",
+    "created" : 1407763266142.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "3109142832",
+    "id" : "98817C8C",
+    "lastKnownWriteTime" : 1407840168,
+    "path" : "C:/R/DataProducts/server.R",
+    "project_path" : "server.R",
+    "properties" : {
+    },
+    "source_on_save" : false,
+    "type" : "r_source"
+}
